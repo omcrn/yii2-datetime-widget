@@ -81,6 +81,9 @@ class DateTimeWidget extends InputWidget
     public function init()
     {
         parent::init();
+        if ($this->name !== null){
+            $this->options['name'] = $this->name;
+        }
         $value = $this->hasModel() ? Html::getAttributeValue($this->model, $this->attribute) : $this->value;
         $this->momentDatetimeFormat = $this->momentDatetimeFormat ?: ArrayHelper::getValue(
             $this->getPhpMomentMappings(),
@@ -101,7 +104,7 @@ class DateTimeWidget extends InputWidget
             'class' => 'form-control',
         ], $this->options);
 
-        if ($value !== null && trim($value) !== '') {
+        if ($value !== null) {
             $this->options['value'] = array_key_exists('value', $this->options)
                 ? $this->options['value']
                 : Yii::$app->formatter->asDatetime($value, $this->phpDatetimeFormat);
